@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema da Polícia</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #34495e;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #1abc9c;
+        }
+
+        .container {
+            padding: 20px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            background-color: #1abc9c;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .section form input,
+        .section form select,
+        .section form textarea,
+        .section form button {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .section form button {
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .section form button:hover {
+            background-color: #16a085;
+        }
+
+        .restricted {
+            display: none;
+        }
+
+        .rules ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Sistema da Polícia</h1>
+        <p>Gestão de operações internas</p>
+    </header>
+
+    <nav>
+        <a href="#entrada">Entrada de Serviço</a>
+        <a href="#saida">Saída de Serviço</a>
+        <a href="#evidencias">Colocar Evidências</a>
+        <a href="#regras">Regras</a>
+        <a href="#recrutamento">Recrutamento</a>
+        <a href="#painel">Painel de Gestão</a>
+    </nav>
+
+    <div class="container">
+        <section id="entrada" class="section">
+            <h2>Entrada de Serviço</h2>
+            <form>
+                <input type="text" placeholder="Nome do agente" required>
+                <input type="text" placeholder="Patente" required>
+                <input type="time" placeholder="Hora de entrada" required>
+                <button type="submit">Registar Entrada</button>
+            </form>
+        </section>
+
+        <section id="saida" class="section">
+            <h2>Saída de Serviço</h2>
+            <form>
+                <input type="text" placeholder="Nome do agente" required>
+                <input type="text" placeholder="Patente" required>
+                <input type="time" placeholder="Hora de saída" required>
+                <textarea placeholder="Observações"></textarea>
+                <button type="submit">Registar Saída</button>
+            </form>
+        </section>
+
+        <section id="evidencias" class="section">
+            <h2>Colocar Evidências</h2>
+            <form>
+                <input type="text" placeholder="Caso/ID" required>
+                <textarea placeholder="Descrição das evidências" required></textarea>
+                <input type="file" accept="image/*,application/pdf">
+                <button type="submit">Submeter Evidências</button>
+            </form>
+        </section>
+
+        <section id="regras" class="section rules">
+            <h2>Regras</h2>
+            <ul>
+                <li>Respeitar sempre as hierarquias.</li>
+                <li>Seguir os protocolos estabelecidos.</li>
+                <li>Garantir a integridade e confidencialidade dos dados.</li>
+                <li>Evitar abusos de poder.</li>
+            </ul>
+        </section>
+
+        <section id="recrutamento" class="section">
+            <h2>Recrutamento</h2>
+            <form>
+                <input type="text" placeholder="Nome do candidato" required>
+                <input type="text" placeholder="Patente desejada">
+                <textarea placeholder="Motivo para se juntar à força policial" required></textarea>
+                <button type="submit">Submeter Candidatura</button>
+            </form>
+        </section>
+
+        <section id="painel" class="section restricted">
+            <h2>Painel de Gestão</h2>
+            <form>
+                <select>
+                    <option>Escolher agente</option>
+                    <option>Agente A</option>
+                    <option>Agente B</option>
+                </select>
+                <select>
+                    <option>Ação</option>
+                    <option>Subir patente</option>
+                    <option>Descer patente</option>
+                </select>
+                <textarea placeholder="Justificação"></textarea>
+                <button type="submit">Executar Ação</button>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Sistema da Polícia. Todos os direitos reservados.</p>
+    </footer>
+
+    <script>
+        // Lógica para gerir acesso ao painel de gestão (apenas para patentes superiores)
+        document.addEventListener('DOMContentLoaded', () => {
+            const userRank = prompt("Insira a sua patente:").toLowerCase();
+            const restrictedSection = document.querySelector('.restricted');
+
+            if (['inspetor', 'comissário', 'chefe'].includes(userRank)) {
+                restrictedSection.style.display = 'block';
+            } else {
+                alert("Acesso negado. Apenas patentes superiores têm acesso a esta área.");
+            }
+        });
+    </script>
+</body>
+</html>
